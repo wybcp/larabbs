@@ -82,4 +82,5 @@ class UsersController extends Controller
         }
         return $data;
     }
+
 }
