@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Reply;
 use App\Models\Topic;
 use Auth;
 use Illuminate\Http\Request;
