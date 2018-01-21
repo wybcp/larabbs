@@ -5,6 +5,7 @@ namespace App\Observers;
 use function app;
 use App\Handlers\SlugTranslateHandler;
 use App\Models\Topic;
+use DB;
 use function makeExcerpt;
 use App\Jobs\TranslateSlug;
 
@@ -42,5 +43,10 @@ class TopicObserver
             dispatch(new TranslateSlug($topic));
         }
 
+    }
+
+    public function deleted(Topic $topic)
+    {
+        DB::table('replies')->where('topic_id',$topic->id)->delete();
     }
 }
