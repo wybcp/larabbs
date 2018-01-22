@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\User;
+use Auth;
+use Horizon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -29,6 +31,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+//        horizon仪表盘访问权限
+        Horizon::auth(function ($request){
+            return Auth::user()->hasRole('Founder');
+        });
     }
 }

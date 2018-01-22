@@ -20,8 +20,12 @@
         @include('layouts._message')
         @yield('content')
     </div>
-    @include('layouts._footer')
 
+    @if(app()->isLocal())
+        @include('sudosu::user-selector')
+    @endif
+
+    @include('layouts._footer')
     <script src="{{mix('js/app.js')}}"></script>
     @yield('scripts')
 </div>
