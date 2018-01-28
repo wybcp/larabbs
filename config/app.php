@@ -182,6 +182,8 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Mews\Purifier\PurifierServiceProvider::class,
 
+        Frozennode\Administrator\AdministratorServiceProvider::class,
+
 
     ],
 
