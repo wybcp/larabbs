@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Reply;
 use App\Models\Topic;
+use App\Models\User;
 use Auth;
+use function dd;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TopicRequest;
@@ -21,7 +23,7 @@ class TopicsController extends Controller
 	{
         $topics = $topic->withOrder($request->order)->paginate(30);
 //		$topics = Topic::paginate();
-		return view('topics.index', compact('topics'));
+		return view('topics.index', compact('topics','active_users'));
 	}
 
     public function show(Request $request,Topic $topic)
