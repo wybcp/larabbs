@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\ActiveuserHelper;
+use App\Models\Traits\LastActivedAtHelper;
 use function bcrypt;
 use Illuminate\Notifications\Notifiable;
 use Auth;
@@ -16,6 +17,7 @@ class User extends Authenticatable
         notify as protected laravelNotify;
     }
     use ActiveuserHelper;
+    use LastActivedAtHelper;
 
     /**
      * The attributes that are mass assignable.
