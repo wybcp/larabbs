@@ -21,7 +21,8 @@
         "renatomarinho/laravel-page-speed": "^1.8",
         "spatie/laravel-permission": "^2.7",
         "summerblue/administrator": "^1.1",
-        "viacreative/sudo-su": "^1.1"
+        "viacreative/sudo-su": "^1.1",
+        "dingo/api": "2.0.0-alpha1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",
@@ -67,8 +68,7 @@
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan ide-helper:generate",
             "php artisan ide-helper:meta",
-            "php artisan optimize",
-            "php artisan route:cache"
+            "php artisan optimize"
         ]
 
     },
