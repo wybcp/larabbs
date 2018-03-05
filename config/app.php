@@ -164,6 +164,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+
         /*
          * Package Service Providers...
          */
@@ -183,6 +184,8 @@ return [
         Mews\Purifier\PurifierServiceProvider::class,
 
         Frozennode\Administrator\AdministratorServiceProvider::class,
+
+        App\Providers\EasySmsServiceProvider::class,
 
 
     ],
