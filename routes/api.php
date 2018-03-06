@@ -29,6 +29,13 @@ $api->version('v1',['namespace'=>'App\Http\Controllers\Api'],function ($api){
 //    用户注册
         $api->post('users','UsersController@store')->name('api.users.store');
     });
+    $api->group(['middleware' => 'api.throttle',
+                 'limit' => config('api.rate_limits.access.limit'),
+                 'expires' => config('api.rate_limits.access.expires'),],
+        function ($api){
+//    图片验证码
+            $api->post('captchas', 'CaptchasController@store')->name('api.captchas.store');
+    });
 
 });
 
