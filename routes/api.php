@@ -37,6 +37,11 @@ $api->version('v1',['namespace'=>'App\Http\Controllers\Api'],function ($api){
             $api->post('captchas', 'CaptchasController@store')->name('api.captchas.store');
     });
 
+    // 第三方登录
+    $api->post('socials/{social_type}/authorizations', 'AuthorizationsController@socialStore')
+        ->name('api.socials.authorizations.store');
+
+
 });
 
 $api->version('v2',function ($api){
