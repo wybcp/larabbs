@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-
 use App\Http\Requests\Api\UserRequest;
 use App\Models\User;
+use App\Transformers\UserTransformer;
+use Auth;
 use Cache;
 use function hash_equals;
 
@@ -31,5 +32,18 @@ class UsersController extends Controller
         Cache::forget($request->verification_code);
 
         return $this->response->created();
+    }
+
+    public function show()
+    {
+        return $this->response
+            ->item($this->user(),new UserTransformer())
+            ->setMeta([
+                'access_token'=>Auth::guard('api')->setTTl(60)->fromUser($this->user),
+                'token_type' => 'Bearer',
+                'expires_in' => Auth::guard('api')->factory()->getTTL() * 60
+
+            ])
+            ->setStatusCode(201);
     }
 }
