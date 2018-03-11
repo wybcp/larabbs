@@ -59,7 +59,11 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api','middleware'=>'se
                 $api->patch('user','UsersController@update')->name('api.user.update');
 //                图片资源
                 $api->post('images','ImagesController@store')->name('api.image.store');
+//                发布话题
+                $api->post('topics','TopicsController@store')->name('api.topic.store');
             });
+
+            $api->get('categories','CategoriesController@index')->name('api.categories.index');
 
         });
 });
