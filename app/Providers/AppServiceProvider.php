@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use API;
 use App\Models\Link;
 use App\Models\Reply;
 use App\Models\Topic;
@@ -44,5 +45,13 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\VIACreative\SudoSu\ServiceProvider::class);
 
         }
+        API::error(function (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
+            abort(404);
+        });
+
+        API::error(function (\Illuminate\Auth\Access\AuthorizationException $exception) {
+            abort(403, $exception->getMessage());
+        });
     }
+
 }

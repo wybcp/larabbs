@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 
 $api = app('Dingo\Api\Routing\Router');
 
-$api->version('v1', ['namespace' => 'App\Http\Controllers\Api','middleware'=>'serializer:array'], function ($api) {
+$api->version('v1', ['namespace' => 'App\Http\Controllers\Api','middleware' => ['serializer:array', 'bindings']], function ($api) {
     $api->group([
         'middleware' => 'api.throttle',
         'limit'      => config('api.rate_limits.sign.limit'),
@@ -61,6 +61,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api','middleware'=>'se
                 $api->post('images','ImagesController@store')->name('api.image.store');
 //                发布话题
                 $api->post('topics','TopicsController@store')->name('api.topic.store');
+//                修改话题
+                $api->patch('topics/{topic}', 'TopicsController@update')->name('api.topics.update');
             });
 
             $api->get('categories','CategoriesController@index')->name('api.categories.index');
