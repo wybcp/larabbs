@@ -68,6 +68,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api','middleware' => [
             });
 
             $api->get('categories','CategoriesController@index')->name('api.categories.index');
+            $api->get('topics','TopicsController@index')->name('api.topics.index');
+            $api->get('users/{user}/topics', 'TopicsController@userIndex')->name('api.users.topics.index');
 
         });
 });
