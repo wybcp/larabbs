@@ -74,6 +74,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api','middleware' => [
                 $api->get('user/notifications/statistics','NotificationsController@statistics')->name('api.user.notification.statistics');
 //                通知列表
                 $api->get('user/notifications/{per_page?}','NotificationsController@index')->name('api.user.notifications.index');
+                //            标记已读
+                $api->patch('user/read/notifications','NotificationsController@read')->name('api.user.notifications.read');
             });
 
             $api->get('categories','CategoriesController@index')->name('api.categories.index');
