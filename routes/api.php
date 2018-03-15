@@ -77,6 +77,9 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api','middleware' => [
             $api->get('topics','TopicsController@index')->name('api.topics.index');
             $api->get('users/{user}/topics', 'TopicsController@userIndex')->name('api.users.topics.index');
             $api->get('topics/{topic}', 'TopicsController@show')->name('api.topics.show');
+            // 话题回复列表
+            $api->get('topics/{topic}/replies', 'RepliesController@index')->name('api.topics.replies.index');
+            $api->get('users/{user}/replies/{page_number?}', 'RepliesController@userIndex')->name('api.users.replies.index');
 
         });
 });
