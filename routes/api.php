@@ -76,6 +76,8 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api','middleware' => [
                 $api->get('user/notifications/{per_page?}','NotificationsController@index')->name('api.user.notifications.index');
                 //            标记已读
                 $api->patch('user/read/notifications','NotificationsController@read')->name('api.user.notifications.read');
+//            获取权限
+                $api->get('user/permissions','PermissionsController@index')->name('api.user.permissions.index');
             });
 
             $api->get('categories','CategoriesController@index')->name('api.categories.index');
@@ -85,6 +87,7 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api','middleware' => [
             // 话题回复列表
             $api->get('topics/{topic}/replies', 'RepliesController@index')->name('api.topics.replies.index');
             $api->get('users/{user}/replies/{page_number?}', 'RepliesController@userIndex')->name('api.users.replies.index');
+
 
         });
 });
