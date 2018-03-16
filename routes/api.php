@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 
 $api = app('Dingo\Api\Routing\Router');
 
-$api->version('v1', ['namespace' => 'App\Http\Controllers\Api','middleware' => ['serializer:array', 'bindings']], function ($api) {
+$api->version('v1', ['namespace' => 'App\Http\Controllers\Api', 'middleware' => ['serializer:array', 'bindings', 'change-locale']], function ($api) {
     $api->group([
         'middleware' => 'api.throttle',
         'limit'      => config('api.rate_limits.sign.limit'),
@@ -56,11 +56,11 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api','middleware' => [
                 // 当前登录用户信息
                 $api->get('user', 'UsersController@show')->name('api.user.show');
 //                编辑用户资料
-                $api->patch('user','UsersController@update')->name('api.user.update');
+                $api->patch('user', 'UsersController@update')->name('api.user.update');
 //                图片资源
-                $api->post('images','ImagesController@store')->name('api.image.store');
+                $api->post('images', 'ImagesController@store')->name('api.image.store');
 //                发布话题
-                $api->post('topics','TopicsController@store')->name('api.topic.store');
+                $api->post('topics', 'TopicsController@store')->name('api.topic.store');
 //                修改话题
                 $api->patch('topics/{topic}', 'TopicsController@update')->name('api.topics.update');
 //                删除话题
@@ -69,28 +69,29 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api','middleware' => [
                 $api->post('topics/{topic}/replies', 'RepliesController@store')->name('api.topics.replies.store');
                 // 删除回复
                 $api->delete('topics/{topic}/replies/{reply}', 'RepliesController@destroy')
-                    ->name('api.topics.replies.destroy');
+                    ->name('api.topics.replies.destroy')
+                ;
 //                通知统计
-                $api->get('user/notifications/statistics','NotificationsController@statistics')->name('api.user.notification.statistics');
+                $api->get('user/notifications/statistics', 'NotificationsController@statistics')->name('api.user.notification.statistics');
 //                通知列表
-                $api->get('user/notifications/{per_page?}','NotificationsController@index')->name('api.user.notifications.index');
+                $api->get('user/notifications/{per_page?}', 'NotificationsController@index')->name('api.user.notifications.index');
                 //            标记已读
-                $api->patch('user/read/notifications','NotificationsController@read')->name('api.user.notifications.read');
+                $api->patch('user/read/notifications', 'NotificationsController@read')->name('api.user.notifications.read');
 //            获取权限
-                $api->get('user/permissions','PermissionsController@index')->name('api.user.permissions.index');
+                $api->get('user/permissions', 'PermissionsController@index')->name('api.user.permissions.index');
             });
 
-            $api->get('categories','CategoriesController@index')->name('api.categories.index');
-            $api->get('topics','TopicsController@index')->name('api.topics.index');
+            $api->get('categories', 'CategoriesController@index')->name('api.categories.index');
+            $api->get('topics', 'TopicsController@index')->name('api.topics.index');
             $api->get('users/{user}/topics', 'TopicsController@userIndex')->name('api.users.topics.index');
             $api->get('topics/{topic}', 'TopicsController@show')->name('api.topics.show');
             // 话题回复列表
             $api->get('topics/{topic}/replies', 'RepliesController@index')->name('api.topics.replies.index');
             $api->get('users/{user}/replies/{page_number?}', 'RepliesController@userIndex')->name('api.users.replies.index');
 //            资源推荐
-            $api->get('links','LinksController@index')->name('api.links.index');
-
-
+            $api->get('links', 'LinksController@index')->name('api.links.index');
+//            活跃用户
+            $api->get('actived/users', 'UsersController@activedIndex')->name('api.actived.user.index');
 
 
         });
