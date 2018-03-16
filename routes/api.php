@@ -87,6 +87,10 @@ $api->version('v1', ['namespace' => 'App\Http\Controllers\Api','middleware' => [
             // 话题回复列表
             $api->get('topics/{topic}/replies', 'RepliesController@index')->name('api.topics.replies.index');
             $api->get('users/{user}/replies/{page_number?}', 'RepliesController@userIndex')->name('api.users.replies.index');
+//            资源推荐
+            $api->get('links','LinksController@index')->name('api.links.index');
+
+
 
 
         });
