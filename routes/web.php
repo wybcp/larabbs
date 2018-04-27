@@ -16,4 +16,6 @@
 //});
 Route::get('/','StaticPagesController@index');
 Route::get('/help','StaticPagesController@help');
-Route::get('/about','StaticPagesController@about');
+Route::get('/about','StaticPagesController@about');//查看log
+//查看log
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('logs');
