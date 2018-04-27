@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'zh-CN',
 
     /*
     |--------------------------------------------------------------------------
@@ -161,6 +161,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+
     ],
 
     /*
