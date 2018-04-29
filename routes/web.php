@@ -23,8 +23,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 //查看log
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('logs');
 
-Route::get('/signup','UsersController@create')->name('signup');
-
 Route::resource('users','UsersController');
+
+Route::get('/login','UsersController@login')->name('users.login');
+Route::post('/login','UsersController@checkLogin')->name('users.login');
+Route::delete('/logout','UsersController@logout')->name('users.logout');
+
+
 
 

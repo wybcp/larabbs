@@ -5,6 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="{{csrf_token()}}" name="csrf-token">
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}" type="text/css">
     <title>@yield('title','Blog')</title>
 </head>
@@ -17,6 +18,6 @@
         @include('layouts._footer')
     </div>
 </div>
-
+<script type="text/javascript" src="{{mix('/js/app.js')}}"></script>
 </body>
 </html>
