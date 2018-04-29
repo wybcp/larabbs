@@ -24,3 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('logs');
 
 Route::get('/signup','UsersController@create')->name('signup');
+
+Route::resource('users','UsersController');
+
+
