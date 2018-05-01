@@ -8,6 +8,7 @@ use function back;
 use function compact;
 use Hash;
 use Illuminate\Http\Request;
+use Mail;
 use function redirect;
 use function session;
 use function view;
@@ -20,11 +21,11 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware('auth', [
-            'except' => ['show', 'create', 'store', 'login', 'checkLogin','index']
+            'except' => ['show', 'create', 'store', 'login', 'checkLogin','index','confirmEmail']
         ]);
 
         $this->middleware('guest', [
-            'only' => ['login', 'create']
+            'only' => ['login', 'create','confirmEmail']
         ]);
     }
 
@@ -84,10 +85,29 @@ class UsersController extends Controller
             'email'    => $request->email,
             'password' => Hash::make($request->password),
         ]);
-        Auth::login($user);
-        session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
+        $this->sendActiveEmail($user);
+//        Auth::login($user);
+//
+//        session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
+//
+//        return redirect()->route('users.show', compact('user'));
+        session()->flash('success', '验证邮箱已发送到你的激活邮箱');
 
-        return redirect()->route('users.show', compact('user'));
+        return redirect()->route('home');
+    }
+
+    protected function sendActiveEmail($user){
+
+        $view='emails.confirm';
+        $data=compact('user');
+        $from='wangyb65@gmail.com';
+        $name='bobo';
+        $to=$user->email;
+        $subject='激活';
+        Mail::send($view,$data,function ($message) use ($from,$name,$to,$subject){
+            $message->from($from,$name)->to($to)->subject($subject);
+        });
+
     }
 
     /**
@@ -111,8 +131,14 @@ class UsersController extends Controller
             'password' => 'required'
         ]);
         if (Auth::attempt($credentials, $request->has('remember'))) {
-            session()->flash('success', "欢迎回来，" . Auth::user()->name . "！");
-            return redirect()->intended(route('users.show', [Auth::user()]));
+            if (Auth::user()->activated){
+                session()->flash('success', "欢迎回来，" . Auth::user()->name . "！");
+                return redirect()->intended(route('users.show', [Auth::user()]));
+            }else{
+                Auth::logout();
+                session()->flash('warning', '您的邮箱未激活！');
+                return redirect()->route('home');
+            }
         } else {
             session()->flash('danger', '很抱歉，您的邮箱和密码不匹配');
             return back();
@@ -132,5 +158,18 @@ class UsersController extends Controller
         $user->delete();
         session()->flash('success','成功删除'.$user->name);
         return back();
+    }
+
+    public function confirmEmail($token)
+    {
+        $user=User::where('activation_token',$token)->firstOrFail();
+        $user->activated=true;
+        $user->activation_token=null;
+        $user->save();
+
+        Auth::login($user);
+        session()->flash('success','激活成功！');
+        return redirect()->route('users.show',compact('user'));
+        
     }
 }

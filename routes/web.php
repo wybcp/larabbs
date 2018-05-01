@@ -29,6 +29,8 @@ Route::get('/login','UsersController@login')->name('login');
 Route::post('/login','UsersController@checkLogin')->name('login');
 Route::delete('/logout','UsersController@logout')->name('logout');
 
+Route::get('/users/confirm/{token}','UsersController@confirmEmail')->name('users.confirm_email');
+
 
 
 
