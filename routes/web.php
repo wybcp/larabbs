@@ -19,15 +19,15 @@ Route::get('/help','StaticPagesController@help')->name('help');
 Route::get('/about','StaticPagesController@about')->name('about');
 //Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 //查看log
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('logs');
 
 Route::resource('users','UsersController');
 
-Route::get('/login','UsersController@login')->name('users.login');
-Route::post('/login','UsersController@checkLogin')->name('users.login');
-Route::delete('/logout','UsersController@logout')->name('users.logout');
+Route::get('/login','UsersController@login')->name('login');
+Route::post('/login','UsersController@checkLogin')->name('login');
+Route::delete('/logout','UsersController@logout')->name('logout');
 
 
 

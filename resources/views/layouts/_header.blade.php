@@ -6,7 +6,7 @@
                 <ul>
                     @guest
                         <li><a href="{{route('help')}}">帮助</a></li>
-                        <li><a href="{{route('users.login')}}">登录</a></li>
+                        <li><a href="{{route('login')}}">登录</a></li>
                     @else
                         <li><a href="{{route('users.index')}}">用户列表</a></li>
                         <li class="dropdown">
@@ -19,7 +19,7 @@
                                 <li class="dropdown-divider"></li>
                                 <li>
                                     <a href="#" id="logout">
-                                        <form action="{{route('users.logout')}}" method="post">
+                                        <form action="{{route('logout')}}" method="post">
                                             @csrf
                                             {{method_field('DELETE')}}
                                             <button class="btn btn-block btn-danger" type="submit" name="button">退出</button>

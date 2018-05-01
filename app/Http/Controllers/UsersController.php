@@ -14,6 +14,27 @@ use function view;
 
 class UsersController extends Controller
 {
+    /**
+     * UsersController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth', [
+            'except' => ['show', 'create', 'store', 'login', 'checkLogin','index']
+        ]);
+
+        $this->middleware('guest', [
+            'only' => ['login', 'create']
+        ]);
+    }
+
+    public function index()
+    {
+        $users=User::paginate(10);
+        return view('users.index',compact('users'));
+    }
+
+
     /**创建用户，注册页面
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -25,6 +46,29 @@ class UsersController extends Controller
     public function show(User $user)
     {
         return view('users.show', compact('user'));
+    }
+
+    public function edit(User $user)
+    {
+        $this->authorize('update', $user);
+        return view('users.edit', compact('user'));
+    }
+
+    public function update(User $user, Request $request)
+    {
+        $this->authorize('update', $user);
+        $this->validate($request, [
+            'name'     => 'required|min:3|max:30',
+            'password' => 'nullable|confirmed|min:6'
+        ]);
+        $data = [];
+        $data['name'] = $request->name;
+        if ($request->password) {
+            $data['password'] = Hash::make($request->password);
+        }
+        $user->update($data);
+        session()->flash('success', '资料更新成功！');
+        return redirect()->route('users.show', $user->id);
     }
 
     public function store(Request $request)
@@ -66,9 +110,9 @@ class UsersController extends Controller
             'email'    => 'required|email|max:255',
             'password' => 'required'
         ]);
-        if (Auth::attempt($credentials,$request->has('remember'))) {
+        if (Auth::attempt($credentials, $request->has('remember'))) {
             session()->flash('success', "欢迎回来，" . Auth::user()->name . "！");
-            return redirect()->route('users.show', [Auth::user()]);
+            return redirect()->intended(route('users.show', [Auth::user()]));
         } else {
             session()->flash('danger', '很抱歉，您的邮箱和密码不匹配');
             return back();
@@ -78,7 +122,15 @@ class UsersController extends Controller
     public function logout()
     {
         Auth::logout();
-        session()->flash('success','你已成功退出！');
-        return redirect()->route('users.login');
+        session()->flash('success', '你已成功退出！');
+        return redirect()->route('login');
+    }
+
+    public function destroy(User $user)
+    {
+        $this->authorize('destroy',$user);
+        $user->delete();
+        session()->flash('success','成功删除'.$user->name);
+        return back();
     }
 }
