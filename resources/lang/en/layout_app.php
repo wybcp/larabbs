@@ -19,5 +19,8 @@ return [
     'forget_password' => 'Forgot Your Password?',
     'remember' => 'Remember Me',
     'password' => 'Password',
+    'reset_password'=>'Reset Password',
+    'confirm_password'=>'Confirm Password',
+    'send_email'=>'Send Password Reset Link',
 
 ];

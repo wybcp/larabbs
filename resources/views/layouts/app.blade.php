@@ -42,7 +42,7 @@
                         <!-- Authentication Links -->
                         @guest
                             <li><a class="nav-link" href="{{ route('login') }}">{{ __('layout_app.login') }}</a></li>
-                            <li><a class="nav-link" href="{{ route('register') }}">{{ __('layout_app.logout') }}</a></li>
+                            <li><a class="nav-link" href="{{ route('users.create') }}">{{ __('layout_app.logout') }}</a></li>
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

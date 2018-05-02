@@ -19,5 +19,8 @@ return [
     'forget_password' => '忘记密码?',
     'remember' => '记住我',
     'password' => '密码',
+    'reset_password'=>'重置密码',
+    'confirm_password'=>'确认密码',
+    'send_email'=>'发送密码重置链接',
 
 ];
