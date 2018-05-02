@@ -28,6 +28,9 @@
                 <section class="user_info">
                     @include('layouts._user_gravatar', ['user' => Auth::user()])
                 </section>
+                <section class="stats">
+                    @include('layouts._stats', ['user' => Auth::user()])
+                </section>
             </aside>
         </div>
     @endguest
