@@ -15,9 +15,10 @@ $app = new Illuminate\Foundation\Application(
     realpath(__DIR__.'/../')
 );
 
+require_once __DIR__ . '/helpers.php';
 /*
 |--------------------------------------------------------------------------
-| Bind Important Interfaces
+| Bind Important Interfacesgit
 |--------------------------------------------------------------------------
 |
 | Next, we need to bind some important interfaces into the container so
