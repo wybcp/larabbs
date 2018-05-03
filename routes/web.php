@@ -12,3 +12,8 @@
 */
 
 Route::get('/','PagesController@home')->name('home');
+
+Auth::routes();
+
+//查看log
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('logs');
