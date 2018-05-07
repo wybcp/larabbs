@@ -1,23 +1,15 @@
 <nav class="navbar  navbar-static-top">
     <div class="container">
-        <div class="navbar-header">
-
-            <!-- Collapsed Hamburger -->
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                <span class="sr-only">Toggle Navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-
+        <div class="navbar-header col-md-2">
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/') }}">
                 LaraBBS
             </a>
         </div>
 
-        <div class="collapse navbar-collapse" id="app-navbar-collapse">
+        <div class="navbar-collapse float-right offset-md-6 col-md-4" id="app-navbar-collapse">
             <!-- Authentication Links -->
+            <ul class="list-unstyled">
             @guest
                 <li><a href="{{ route('login') }}">登录</a></li>
                 <li><a href="{{ route('register') }}">注册</a></li>
@@ -34,6 +26,11 @@
 
                     <ul class="dropdown-menu" role="menu">
                         <li>
+                            <a href="{{ route('users.edit', Auth::id()) }}">
+                                编辑资料
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                 退出登录
                             </a>
@@ -45,6 +42,7 @@
                     </ul>
                 </li>
             @endguest
+            </ul>
         </div>
     </div>
 </nav>
