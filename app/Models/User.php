@@ -24,6 +24,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'last_login_at',
+        'last_login_ip',
     ];
 
     /**
@@ -100,5 +102,13 @@ class User extends Authenticatable
     public function isFollowing($user_id)
     {
         return $this->followings->contains($user_id);
+    }
+
+    public function authenticated(Request $request, $user)
+    {
+        $user->update([
+            'last_login_at' => Carbon::now()->toDateTimeString(),
+            'last_login_ip' => $request->getClientIp()
+        ]);
     }
 }

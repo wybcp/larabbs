@@ -3,18 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserLoginLog;
 use Auth;
 use function back;
+use Carbon\Carbon;
 use function compact;
+use function dd;
 use Hash;
 use Illuminate\Http\Request;
 use Mail;
 use function redirect;
 use function session;
 use function view;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class UsersController extends Controller
 {
+    use AuthenticatesUsers;
     /**
      * UsersController constructor.
      */
@@ -139,6 +144,7 @@ class UsersController extends Controller
         if (Auth::attempt($credentials, $request->has('remember'))) {
             if (Auth::user()->activated){
                 session()->flash('success', "欢迎回来，" . Auth::user()->name . "！");
+                $this->authenticated($request,Auth::user());
                 return redirect()->intended(route('users.show', [Auth::user()]));
             }else{
                 Auth::logout();
@@ -149,6 +155,20 @@ class UsersController extends Controller
             session()->flash('danger', '很抱歉，您的邮箱和密码不匹配');
             return back();
         }
+    }
+
+    public function authenticated(Request $request,User $user)
+    {
+        $user->update([
+            'last_login_at' => Carbon::now()->toDateTimeString(),
+            'last_login_ip' => $request->getClientIp()
+        ]);
+        $user_login=new UserLoginLog();
+        $user_login->user_id=$user->id;
+        $user_login->login_at=Carbon::now()->toDateTimeString();
+        $user_login->login_ip=$request->getClientIp();
+        $user_login->save();
+
     }
 
     public function logout()
