@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-body">
                     <div align="center">
-                        <img class="img-thumbnail embed-responsive" src="https://fsdhubcdn.phphub.org/uploads/images/201709/20/1/PtDKbASVcz.png?imageView2/1/w/600/h/600"
+                        <img class="img-thumbnail embed-responsive" src="{{$user->avatar}}"
                              width="300px" height="300px">
                     </div>
                     <div class="media-body">
