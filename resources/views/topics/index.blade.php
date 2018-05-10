@@ -12,8 +12,8 @@
 
                 <div class="card-header">
                     <ul class="nav nav-fill">
-                        <li role="presentation" class="active nav-item"><a href="#">最后回复</a></li>
-                        <li role="presentation" class="nav-item"><a href="#">最新发布</a></li>
+                        <li role="presentation" class="{{ active_class( ! if_query('order', 'recent') ) }} nav-item"><a class="nav-link" href="{{ Request::url() }}?order=default">最后回复</a></li>
+                        <li role="presentation" class="{{ active_class(if_query('order', 'recent')) }} nav-item"><a class="nav-link" href="{{ Request::url() }}?order=recent">最新发布</a></li>
                     </ul>
                 </div>
 
