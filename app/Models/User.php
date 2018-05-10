@@ -43,6 +43,13 @@ class User extends Authenticatable
      */
     public function getAvatarAttribute($key)
     {
-        return $this->attributes['avatar'] = $key?config('app.url') . $key:'https://fsdhubcdn.phphub.org/uploads/images/201709/20/1/PtDKbASVcz.png?imageView2/1/w/60/h/60';
+        if ($key) {
+//            判断是本地还在网络image
+            $url = filter_var($key, FILTER_VALIDATE_URL) ? $key : config('app.url') . $key;
+        } else {
+//            没有image,返回一个默认值
+            $url = 'https://fsdhubcdn.phphub.org/uploads/images/201709/20/1/PtDKbASVcz.png?imageView2/1/w/60/h/60';
+        }
+        return $this->attributes['avatar'] = $url;
     }
 }
