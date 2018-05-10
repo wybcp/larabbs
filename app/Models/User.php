@@ -52,4 +52,9 @@ class User extends Authenticatable
         }
         return $this->attributes['avatar'] = $url;
     }
+
+    public function topics()
+    {
+        return $this->hasMany(Topic::class);
+    }
 }
