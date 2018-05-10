@@ -23,4 +23,5 @@ class UserPolicy
     {
         return $current_user->id===$user->id;
     }
+
 }

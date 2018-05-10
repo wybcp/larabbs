@@ -17,4 +17,5 @@ class TopicPolicy extends Policy
     {
         return true;
     }
+
 }
