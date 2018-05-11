@@ -52,3 +52,23 @@
         </div>
     </div>
 @endsection
+
+@section('styles')
+    <link rel="stylesheet" type="text/css" href="{{mix('css/simditor.css') }}">
+@stop
+
+@section('scripts')
+    {{--<script type="text/javascript"  src="{{ mix('js/simditor.js') }}"></script>--}}
+    <script type="text/javascript"  src="{{ asset('js/module.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js/hotkeys.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js/uploader.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('js/simditor.js') }}"></script>
+
+    <script>
+        $(document).ready(function(){
+            let editor = new Simditor({
+                textarea: $('#editor'),
+            });
+        });
+    </script>
+@endsection
