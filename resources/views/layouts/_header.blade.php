@@ -25,6 +25,13 @@
                         <a class="nav-link" href="{{ route('topics.create') }}">新建</a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ route('notifications.index') }}"  style="margin-top: -2px;" class="nav-link">
+                            <span class="badge badge-{{ Auth::user()->notification_count > 0 ? 'hint' : 'fade' }} " title="消息提醒">
+                                {{ Auth::user()->notification_count }}
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <img src="{{Auth::user()->avatar}}" class="img-responsive img-circle" width="30px" height="30px">
                             {{ Auth::user()->name }}
