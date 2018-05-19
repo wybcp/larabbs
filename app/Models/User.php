@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\ActiveUserHelper;
 use Auth;
 use function config;
 use Illuminate\Notifications\Notifiable;
@@ -14,6 +15,7 @@ class User extends Authenticatable
         notify as laravelNotify;
     }
     use HasRoles;
+    use ActiveUserHelper;
 
     /**
      * The attributes that are mass assignable.
