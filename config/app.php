@@ -163,6 +163,7 @@ return [
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
         HieuLe\Active\ActiveServiceProvider::class,
+        \App\Providers\EasySmsServiceProvider::class,
 
     ],
 
