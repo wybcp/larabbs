@@ -17,18 +17,26 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 
-$api=app('Dingo\Api\Routing\Router');
+$api = app('Dingo\Api\Routing\Router');
 
-$api->version('v1',["namespace"=>"App\Http\Controllers\Api\V1"],function ($api){
-    $api->get('version',function (){
+$api->version('v1', ["namespace" => "App\Http\Controllers\Api\V1"], function ($api) {
+
+    $api->group([
+        'middleware' => 'api.throttle',
+        'limit'      => config('api.rate_limits.sign.limit'),
+        'expires'    => config('api.rate_limits.sign.expires'),
+    ], function ($api) {
+        $api->post('verificationCodes', "VerificationCodesController@store")->name("api.verificationCodes.store");
+//   用户注册
+        $api->post('users', 'UsersController@store')->name('api.users.store');
+    });
+    $api->get('version', function () {
         return response('this is dingo');
     });
-    $api->post('verificationCodes',"VerificationCodesController@store")->name("api.verificationCodes.store");
-//   用户注册
-    $api->post('users','UsersController@store')->name('api.users.store');
+
 });
-$api->version('v2',["namespace"=>"App\Http\Controllers\Api\V1"],function ($api){
-    $api->get('version',function (){
+$api->version('v2', ["namespace" => "App\Http\Controllers\Api\V1"], function ($api) {
+    $api->get('version', function () {
         return response('this is dingo v2.');
     });
 });
