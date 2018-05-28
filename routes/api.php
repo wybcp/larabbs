@@ -32,6 +32,15 @@ $api->version('v1', ["namespace" => "App\Http\Controllers\Api\V1"], function ($a
         // 图片验证码
         $api->post('captchas', 'CaptchasController@store')
             ->name('api.captchas.store');
+        $api->post('socials/{social_type}/authorizations', 'AuthorizationsController@socialStore')
+            ->name('api.socials.authorizations.store');
+        $api->post('authorizations','AuthorizationsController@store')->name('api.authorizations.store');
+        // 刷新token
+        $api->put('authorizations/current', 'AuthorizationsController@update')
+            ->name('api.authorizations.update');
+// 删除token
+        $api->delete('authorizations/current', 'AuthorizationsController@destroy')
+            ->name('api.authorizations.destroy');
     });
     $api->get('version', function () {
         return response('this is dingo');

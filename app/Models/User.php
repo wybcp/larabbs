@@ -9,10 +9,11 @@ use function config;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable{
+    use Notifiable {
         notify as laravelNotify;
     }
     use HasRoles;
@@ -29,6 +30,8 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
+        'weixin_openid',
+        'weixin_unionid',
         'last_login_at',
         'last_login_ip',
         'introduction',
@@ -44,6 +47,15 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
     /**
      * 处理读取的avatar，存储为public文件夹相对路径
@@ -77,11 +89,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Reply::class);
     }
+
 //    定制notify()
     public function notify($instance)
     {
         // 如果要通知的人是当前用户，就不必通知了！
-        if ($this->id===Auth::id()){
+        if ($this->id === Auth::id()) {
             return;
         }
 
@@ -92,7 +105,7 @@ class User extends Authenticatable
 
     public function markAsRead()
     {
-        $this->notification_count=0;
+        $this->notification_count = 0;
         $this->save();
         $this->unreadNotifications->markAsRead();
     }
