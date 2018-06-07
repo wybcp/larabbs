@@ -36,12 +36,12 @@ class TopicsController extends Controller
         return $this->response->noContent();
     }
 
-    public function index(Topic $topic,Request $request)
+    public function index(Topic $topic, Request $request)
     {
-        $query=$topic->query();
+        $query = $topic->query();
 
-        if ($category_id=$request->category_id){
-            $query->where('category_id',$category_id);
+        if ($category_id = $request->category_id) {
+            $query->where('category_id', $category_id);
         }
         switch ($request->order) {
             case 'recent':
@@ -58,13 +58,19 @@ class TopicsController extends Controller
         return $this->response->paginator($topics, new TopicTransformer());
 
     }
-    public function userIndex(User $user,Request $request)
+
+    public function userIndex(User $user, Request $request)
     {
-        $topics=$user->topics()->recent()->paginate(20);
+        $topics = $user->topics()->recent()->paginate(20);
 
         return $this->response->paginator($topics, new TopicTransformer());
 
     }
 
+    public function show(Topic $topic)
+    {
+        return $this->response->item($topic,new TopicTransformer());
+
+    }
 
 }
