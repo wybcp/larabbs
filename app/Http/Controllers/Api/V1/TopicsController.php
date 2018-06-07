@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests\Api\TopicRequest;
+use App\Models\User;
+use Dingo\Api\Http\Request;
 use App\Models\Topic;
 use App\Transformers\TopicTransformer;
 use App\Http\Controllers\Api\Controller;
+use function dd;
 
 class TopicsController extends Controller
 {
@@ -32,4 +35,36 @@ class TopicsController extends Controller
         $topic->delete();
         return $this->response->noContent();
     }
+
+    public function index(Topic $topic,Request $request)
+    {
+        $query=$topic->query();
+
+        if ($category_id=$request->category_id){
+            $query->where('category_id',$category_id);
+        }
+        switch ($request->order) {
+            case 'recent':
+                $query->recent();
+                break;
+
+            default:
+                $query->recentReplied();
+                break;
+        }
+
+        $topics = $query->paginate(20);
+
+        return $this->response->paginator($topics, new TopicTransformer());
+
+    }
+    public function userIndex(User $user,Request $request)
+    {
+        $topics=$user->topics()->recent()->paginate(20);
+
+        return $this->response->paginator($topics, new TopicTransformer());
+
+    }
+
+
 }
