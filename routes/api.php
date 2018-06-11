@@ -82,6 +82,9 @@ $api->version('v1', ["namespace" => "App\Http\Controllers\Api\V1", 'middleware' 
             $api->patch('topics/{topic}', 'TopicsController@update')->name('api.topics.update');
             $api->delete('topics/{topic}', 'TopicsController@destroy')->name('api.topics.destroy');
 
+            $api->post('topics/{topic}/replies','RepliesController@store')->name('api.topics.replies.store');
+            $api->delete('topics/{topic}/replies/{reply}','ReliesController@destroy')->name('api.topics.replies.destroy');
+
         });
     });
 
