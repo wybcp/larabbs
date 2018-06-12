@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 
 $api = app('Dingo\Api\Routing\Router');
 
-$api->version('v1', ["namespace" => "App\Http\Controllers\Api\V1", 'middleware' => ['bindings']], function ($api) {
+$api->version('v1', ["namespace" => "App\Http\Controllers\Api\V1", 'middleware' => ['bindings','change-locale']], function ($api) {
 
     $api->group([
         'middleware' => 'api.throttle',
