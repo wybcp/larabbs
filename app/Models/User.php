@@ -32,6 +32,7 @@ class User extends Authenticatable implements JWTSubject
         'phone',
         'weixin_openid',
         'weixin_unionid',
+        'registration_id',
         'last_login_at',
         'last_login_ip',
         'introduction',
